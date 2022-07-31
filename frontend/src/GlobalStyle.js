@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
         color: #e7e7e7;
         overflow: hidden;
         overflow-y: auto;
-        height: 100vh;
+        min-height: 100vh;
     }
 
 `

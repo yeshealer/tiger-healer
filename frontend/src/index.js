@@ -4,6 +4,8 @@ import '@rainbow-me/rainbowkit/styles.css';
 import {
   getDefaultWallets,
   RainbowKitProvider,
+  darkTheme,
+  lightTheme
 } from '@rainbow-me/rainbowkit';
 import {
   chain,
@@ -20,7 +22,7 @@ import './main.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
+  [chain.goerli],
   [
     alchemyProvider({ alchemyId: process.env.ALCHEMY_ID }),
     publicProvider()
@@ -39,7 +41,10 @@ const wagmiClient = createClient({
 root.render(
   <React.StrictMode>
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains}>
+      <RainbowKitProvider chains={chains} showRecentTransactions={true} theme={
+        darkTheme({
+          accentColor: '#38bdf8',
+        })}>
         <App />
       </RainbowKitProvider>
     </WagmiConfig>

@@ -8,7 +8,6 @@ const GlobalStyle = createGlobalStyle`
         background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
         color: #e7e7e7;
         overflow: hidden;
-        overflow-y: auto;
         min-height: 100vh;
     }
 

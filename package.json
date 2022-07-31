@@ -1,6 +1,29 @@
 {
   "dependencies": {
+    "@rainbow-me/rainbowkit": "^0.4.5",
+    "ethers": "^5.6.9",
     "react-router-dom": "^6.3.0",
-    "styled-components": "^5.3.5"
-  }
+    "styled-components": "^5.3.5",
+    "wagmi": "^0.6.0"
+  },
+  "name": "tiger-healer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "cd frontend && yarn start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yeshealer/tiger-healer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yeshealer/tiger-healer/issues"
+  },
+  "homepage": "https://github.com/yeshealer/tiger-healer#readme",
+  "description": ""
 }

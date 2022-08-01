@@ -4,8 +4,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 import {
   getDefaultWallets,
   RainbowKitProvider,
-  darkTheme,
-  lightTheme
+  darkTheme
 } from '@rainbow-me/rainbowkit';
 import {
   chain,

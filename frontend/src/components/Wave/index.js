@@ -133,7 +133,7 @@ const Wave = () => {
                 return (
                     <div key={index} className="bg-slate-500/20 py-2 px-4 rounded-xl">
                         <div className="text-sm">Address: {wave.address}</div>
-                        <div className="text-sm">Time: {wave.timestamp.toString()}</div>
+                        <div className="text-sm">Time: {wave.timestamp.toLocaleString()}</div>
                         <div className="text-sm">Message: {wave.message}</div>
                     </div>)
             })}

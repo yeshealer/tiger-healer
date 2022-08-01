@@ -22,7 +22,7 @@ const Wave = () => {
                 /*
                 * Execute the actual wave from your smart contract
                 */
-                const waveTxn = await tigerWaveContract.wave("Nice to meet you");
+                const waveTxn = await tigerWaveContract.wave("Nice to meet you", { gasLimit: 300000 });
                 console.log("Mining...", waveTxn.hash);
 
                 await waveTxn.wait();

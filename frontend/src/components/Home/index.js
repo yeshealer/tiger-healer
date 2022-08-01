@@ -12,6 +12,8 @@ const Home = () => {
                     whileHover={{
                         borderRadius: ['0%', '100%', '0%'],
                         scale: [1, 1.2, 1.15],
+                        top: '-20px',
+                        right: '20px'
                     }}
                     transition={{
                         duration: 0.5
@@ -29,7 +31,9 @@ const Home = () => {
                 <motion.div
                     whileHover={{
                         borderRadius: ['0%', '100%', '0%'],
-                        scale: [1, 1.25, 1.2]
+                        scale: [1, 1.25, 1.2],
+                        bottom: '-26px',
+                        right: '26px'
                     }}
                     className="w-[17rem] h-[17rem] flex relative justify-center items-center bg-slate-500/20 hover:bg-sky-500/30 ease-in duration-200 shadow-xl cursor-pointer mb-2 border-l border-b border-sky-400"
                 >
@@ -42,7 +46,9 @@ const Home = () => {
                 <motion.div
                     whileHover={{
                         borderRadius: ['0%', '100%', '0%'],
-                        scale: [1, 1.25, 1.2]
+                        scale: [1, 1.25, 1.2],
+                        top: '-26px',
+                        left: '26px'
                     }}
                     className="w-[17rem] h-[17rem] flex relative justify-center items-center bg-slate-500/20 hover:bg-sky-500/30 ease-in duration-200 shadow-xl cursor-pointer mb-2 border-t border-r border-sky-400"
                 >
@@ -53,7 +59,9 @@ const Home = () => {
                 <motion.div
                     whileHover={{
                         borderRadius: ['0%', '100%', '0%'],
-                        scale: [1, 1.25, 1.2]
+                        scale: [1, 1.25, 1.2],
+                        bottom: '-26px',
+                        left: '26px'
                     }}
                     className="w-[17rem] h-[17rem] flex relative justify-center items-center bg-slate-500/20 hover:bg-sky-500/30 ease-in duration-200 shadow-xl cursor-pointer mb-2 border-r border-b border-sky-400"
                 >

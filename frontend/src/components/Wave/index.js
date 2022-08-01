@@ -6,7 +6,7 @@ import abi from "../../utils/TigerWave.json";
 const Wave = () => {
     const [allWaves, setAllWaves] = useState([]);
     const [message, setMessage] = useState("")
-    const {address, iseConnected} = useAccount();
+    const { address, iseConnected } = useAccount();
     const contractAddress = "0x2f0F1b976CE4fD6D58D190090CC6Ccb751bF33d3";
     const contractABI = abi.abi;
 
@@ -138,7 +138,7 @@ const Wave = () => {
                 <div className="w-full mt-5 flex flex-col">
                     {allWaves.map((wave, index) => {
                         return (
-                            <div key={index} className="w-fit bg-slate-500/20 py-2 px-4 rounded-xl">
+                            <div key={index} className={address === wave.address ? "w-fit bg-sky-500/20 py-2 px-4 rounded-xl mt-1 self-end" : "w-fit bg-slate-500/20 py-2 px-4 rounded-xl mt-1"}>
                                 <div className="text-sm">Address: {wave.address}</div>
                                 <div className="text-sm">Time: {wave.timestamp.toLocaleString()}</div>
                                 <div className="text-sm">Message: {wave.message}</div>

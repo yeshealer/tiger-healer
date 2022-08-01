@@ -21,6 +21,7 @@ const Home = () => {
                     className="w-[17rem] h-[17rem] flex relative justify-center items-center bg-slate-500/20 hover:bg-sky-500/30 ease-in duration-200 shadow-xl cursor-pointer mb-2 border-t border-l border-sky-400"
                     onClick={() => navigate('/wave')}
                 >
+                    <div className="w-[8.5rem] h-[8.5rem] bg-slate-500/20 absolute rounded-lg" />
                     <Player
                         autoplay
                         loop

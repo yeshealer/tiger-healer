@@ -15,6 +15,7 @@ contract TigerWave {
         address waver;
         string message;
         uint256 timestamp;
+        bool isPaid;
     }
 
     Wave[] waves;
@@ -27,6 +28,8 @@ contract TigerWave {
     }
 
     function wave(string memory _message) public {
+        bool isPaid = false;
+
         require(
             lastWavedAt[msg.sender] + 3 minutes < block.timestamp,
             "Wait 3m"
@@ -37,14 +40,14 @@ contract TigerWave {
         totalWaves += 1;
         console.log("%s has waved!", msg.sender);
 
-        waves.push(Wave(msg.sender, _message, block.timestamp));
-
         seed = (block.difficulty + block.timestamp + seed) % 100;
 
         console.log("Random # generated: %d", seed);
 
         if (seed < 50) {
             console.log("%s won!", msg.sender);
+
+            isPaid = true;
 
             uint256 prizeAmount = 0.0001 ether;
             require(
@@ -54,6 +57,8 @@ contract TigerWave {
             (bool success, ) = (msg.sender).call{value: prizeAmount}("");
             require(success, "Failed to withdraw money from contract.");
         }
+
+        waves.push(Wave(msg.sender, _message, block.timestamp, isPaid));
         emit NewWave(msg.sender, block.timestamp, _message);
     }
 

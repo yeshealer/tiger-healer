@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { useAccount, useConnect } from "wagmi";
+import { Icon } from '@iconify/react';
+import { useAccount } from "wagmi";
 import { ethers } from "ethers";
 import abi from "../../utils/TigerWave.json";
 
@@ -9,7 +10,7 @@ const Wave = () => {
     const [message, setMessage] = useState("");
     const { openConnectModal } = useConnectModal();
     const { address, isConnected } = useAccount();
-    const contractAddress = "0x2f0F1b976CE4fD6D58D190090CC6Ccb751bF33d3";
+    const contractAddress = "0x1179c470757b9b8Caa16f00fD6f0a6D6e1d918a5";
     const contractABI = abi.abi;
 
     const getMessage = (event) => {
@@ -69,7 +70,8 @@ const Wave = () => {
                     wavesCleaned.push({
                         address: wave.waver,
                         timestamp: new Date(wave.timestamp * 1000),
-                        message: wave.message
+                        message: wave.message,
+                        isPaid: wave.isPaid
                     });
                 });
 
@@ -149,7 +151,10 @@ const Wave = () => {
                             <div key={index} className={address === wave.address ? "w-fit bg-sky-500/20 py-2 px-4 rounded-xl mt-1 self-end" : "w-fit bg-slate-500/20 py-2 px-4 rounded-xl mt-1"}>
                                 <div className="text-sm">Address: {wave.address}</div>
                                 <div className="text-sm">Time: {wave.timestamp.toLocaleString()}</div>
-                                <div className="text-sm">Message: {wave.message}</div>
+                                <div className="flex justify-between items-center">
+                                    <div className="text-sm">Message: {wave.message}</div>
+                                    {wave.isPaid && <Icon icon="flat-color-icons:paid" />}
+                                </div>
                             </div>
                         )
                     })}

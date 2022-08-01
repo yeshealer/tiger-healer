@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import abi from "../../utils/TigerWave.json";
 
 const Wave = () => {
-    const contractAddress = "0x00780C8645387f271fcE5A06C1E52606410Fc694";
+    const [allWaves, setAllWaves] = useState([]);
+    const contractAddress = "0x2f0F1b976CE4fD6D58D190090CC6Ccb751bF33d3";
     const contractABI = abi.abi;
+
     const wave = async () => {
         try {
             const { ethereum } = window;
@@ -20,7 +22,7 @@ const Wave = () => {
                 /*
                 * Execute the actual wave from your smart contract
                 */
-                const waveTxn = await tigerWaveContract.wave();
+                const waveTxn = await tigerWaveContract.wave("Nice to meet you");
                 console.log("Mining...", waveTxn.hash);
 
                 await waveTxn.wait();
@@ -35,6 +37,81 @@ const Wave = () => {
             console.log(error);
         }
     }
+
+    const getAllWaves = async () => {
+        try {
+            const { ethereum } = window;
+            if (ethereum) {
+                const provider = new ethers.providers.Web3Provider(ethereum);
+                const signer = provider.getSigner();
+                const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+                /*
+                 * Call the getAllWaves method from your Smart Contract
+                 */
+                const waves = await wavePortalContract.getAllWaves();
+
+                /*
+                 * We only need address, timestamp, and message in our UI so let's
+                 * pick those out
+                 */
+                let wavesCleaned = [];
+                waves.forEach(wave => {
+                    wavesCleaned.push({
+                        address: wave.waver,
+                        timestamp: new Date(wave.timestamp * 1000),
+                        message: wave.message
+                    });
+                });
+
+                /*
+                 * Store our data in React State
+                 */
+                setAllWaves(wavesCleaned);
+            } else {
+                console.log("Ethereum object doesn't exist!")
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        let wavePortalContract;
+
+        const onNewWave = (from, timestamp, message) => {
+            console.log("NewWave", from, timestamp, message);
+            setAllWaves(prevState => [
+                ...prevState,
+                {
+                    address: from,
+                    timestamp: new Date(timestamp * 1000),
+                    message: message,
+                },
+            ]);
+        };
+
+        if (window.ethereum) {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner();
+
+            wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+            wavePortalContract.on("NewWave", onNewWave);
+        }
+
+        return () => {
+            if (wavePortalContract) {
+                wavePortalContract.off("NewWave", onNewWave);
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        (async () => {
+            await getAllWaves()
+        })();
+    })
+
     return (
         <div className="w-full flex justify-center">
             <button className="relative px-5 py-2 font-medium text-white group" onClick={() => wave()}>
@@ -44,6 +121,14 @@ const Wave = () => {
                 <span className="absolute bottom-0 right-0 hidden w-10 h-20 transition-all duration-100 ease-out transform translate-x-10 translate-y-8 bg-sky-400 -rotate-12"></span>
                 <span className="relative">Send</span>
             </button>
+            {allWaves.map((wave, index) => {
+                return (
+                    <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px" }}>
+                        <div>Address: {wave.address}</div>
+                        <div>Time: {wave.timestamp.toString()}</div>
+                        <div>Message: {wave.message}</div>
+                    </div>)
+            })}
         </div>
     )
 }

@@ -13,14 +13,14 @@ const Home = () => {
                         borderRadius: ['0%', '100%', '0%'],
                         scale: [1, 1.25, 1.2]
                     }}
-                    className="w-72 h-72 flex relative justify-center items-center bg-slate-500/20 hover:bg-sky-500/30 ease-in duration-200 shadow-xl cursor-pointer mb-2 border-t border-l border-sky-400"
+                    className="w-64 h-64 flex relative justify-center items-center bg-slate-500/20 hover:bg-sky-500/30 ease-in duration-200 shadow-xl cursor-pointer mb-2 border-t border-l border-sky-400"
                     onClick={() => navigate('/wave')}
                 >
                     <Player
                         autoplay
                         loop
                         src="https://assets10.lottiefiles.com/private_files/lf30_ikcobyoq.json"
-                        className="w-60 h-60 -rotate-45"
+                        className="w-56 h-56 -rotate-45"
                     />
                 </motion.div>
                 <motion.div
@@ -28,7 +28,7 @@ const Home = () => {
                         borderRadius: ['0%', '100%', '0%'],
                         scale: [1, 1.25, 1.2]
                     }}
-                    className="w-72 h-72 flex relative justify-center items-center bg-slate-500/20 hover:bg-sky-500/30 ease-in duration-200 shadow-xl cursor-pointer mb-2 border-l border-b border-sky-400"
+                    className="w-64 h-64 flex relative justify-center items-center bg-slate-500/20 hover:bg-sky-500/30 ease-in duration-200 shadow-xl cursor-pointer mb-2 border-l border-b border-sky-400"
                 >
                     <div className="w-44 h-44 flex justify-center items-center bg-slate-500/20 rounded-full -rotate-45">
                         <h1 className="text-3xl font-black">Wave</h1>
@@ -41,7 +41,7 @@ const Home = () => {
                         borderRadius: ['0%', '100%', '0%'],
                         scale: [1, 1.25, 1.2]
                     }}
-                    className="w-72 h-72 flex relative justify-center items-center bg-slate-500/20 hover:bg-sky-500/30 ease-in duration-200 shadow-xl cursor-pointer mb-2 border-t border-r border-sky-400"
+                    className="w-64 h-64 flex relative justify-center items-center bg-slate-500/20 hover:bg-sky-500/30 ease-in duration-200 shadow-xl cursor-pointer mb-2 border-t border-r border-sky-400"
                 >
                     <div className="w-44 h-44 flex justify-center items-center bg-slate-500/20 rounded-full -rotate-45">
                         <h1 className="text-3xl font-black">Wave</h1>
@@ -52,7 +52,7 @@ const Home = () => {
                         borderRadius: ['0%', '100%', '0%'],
                         scale: [1, 1.25, 1.2]
                     }}
-                    className="w-72 h-72 flex relative justify-center items-center bg-slate-500/20 hover:bg-sky-500/30 ease-in duration-200 shadow-xl cursor-pointer mb-2 border-r border-b border-sky-400"
+                    className="w-64 h-64 flex relative justify-center items-center bg-slate-500/20 hover:bg-sky-500/30 ease-in duration-200 shadow-xl cursor-pointer mb-2 border-r border-b border-sky-400"
                 >
                     <div className="w-44 h-44 flex justify-center items-center bg-slate-500/20 rounded-full -rotate-45">
                         <h1 className="text-3xl font-black">Wave</h1>

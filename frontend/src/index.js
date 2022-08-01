@@ -44,7 +44,7 @@ root.render(
       <RainbowKitProvider chains={chains} showRecentTransactions={true} theme={
         darkTheme({
           accentColor: '#38bdf8',
-        })}>
+        })} coolMode>
         <App />
       </RainbowKitProvider>
     </WagmiConfig>

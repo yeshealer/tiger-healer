@@ -68,7 +68,8 @@ const Chat = () => {
 
                     count = await tigerWaveContract.getTotalWaves();
                     console.log("Retrieved total wave count...", count.toNumber());
-                    getAllWaves()
+                    setMessage("")
+                    getAllWaves();
                 } else {
                     setWavingStatus("wave");
                     console.log("Ethereum object doesn't exist!");
@@ -157,8 +158,8 @@ const Chat = () => {
 
     return (
         <div className="w-full flex justify-center">
-            <div className="w-1/3 flex flex-col justify-center items-start">
-                <div className={`w-full flex flex-col items-start ${showPointEmotic && '-mt-10'}`}>
+            <div className="w-full md:w-1/2 xl:w-1/3 mx-3 flex flex-col justify-center items-start">
+                <div className={`w-full flex flex-col items-start ${showPointEmotic && '-mt-6'}`}>
                     <div className="flex items-center">
                         {showPointEmotic && <Player
                             autoplay
@@ -167,7 +168,7 @@ const Chat = () => {
                             className="w-36 h-36"
                         />}
                     </div>
-                    <textarea rows={3} className="w-full bg-slate-500/20 border-none outline-none px-4 py-2 rounded-xl" onChange={(e) => getMessage(e)} />
+                    <textarea rows={3} className="w-full bg-slate-500/20 border-none outline-none px-4 py-2 rounded-xl" value={message} onChange={(e) => getMessage(e)} />
                     <div className="w-full flex items-center justify-between mt-1">
                         <div className="text-xl cursor-pointer">😃</div>
                         {isConnected ? <button className="relative px-5 py-1 font-medium text-white group" onClick={() => wave()}>
@@ -175,7 +176,7 @@ const Chat = () => {
                             <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform skew-x-12 bg-sky-700 group-hover:bg-sky-500 group-hover:-skew-x-12"></span>
                             <span className="absolute bottom-0 left-0 hidden w-10 h-20 transition-all duration-100 ease-out transform -translate-x-8 translate-y-10 bg-sky-600 -rotate-12"></span>
                             <span className="absolute bottom-0 right-0 hidden w-10 h-20 transition-all duration-100 ease-out transform translate-x-10 translate-y-8 bg-sky-400 -rotate-12"></span>
-                            <span className="relative">{wavingStatus === 'waving' ? 'Sending' : 'Send'}</span>
+                            <span className="relative">{wavingStatus === 'waving' ? 'Sending...' : 'Send'}</span>
                         </button> : openConnectModal && <button className="relative px-5 py-1 font-medium text-white group" onClick={openConnectModal}>
                             <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-sky-500 group-hover:bg-sky-700 group-hover:skew-x-12"></span>
                             <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform skew-x-12 bg-sky-700 group-hover:bg-sky-500 group-hover:-skew-x-12"></span>
@@ -189,7 +190,7 @@ const Chat = () => {
                 <div className="w-full mt-5 flex flex-col">
                     {allWaves.map((wave, index) => {
                         return (
-                            <div key={index} className={address === wave.address ? "w-fit bg-sky-500/20 py-2 px-4 pr-2 rounded-xl mt-1 self-end" : "w-fit bg-slate-500/20 py-2 px-4 pr-2 rounded-xl mt-1"}>
+                            <div key={index} className={`w-fit bg-slate-500/20 py-2 px-4 pr-2 rounded-xl mt-1 max-w-md ${address === wave.address && 'self-end bg-sky-500/20'}`}>
                                 <div className="flex items-center">
                                     <div className="text-xs text-slate-500 cursor-pointer" data-tip data-for={`wallet-${index}`}
                                         onMouseEnter={() => showWalletTooltip(true)}
@@ -210,7 +211,7 @@ const Chat = () => {
                                     {paidTooltip && <ReactTooltip id={`paid-${index}`}>{address === wave.address ? '🎉 Congratulations! You' : 'This user'} won 0.0001ETH by writing this msg!</ReactTooltip>}
                                 </div>
                                 {walletTooltip && <ReactTooltip id={`wallet-${index}`}>{wave.address}</ReactTooltip>}
-                                <div className="flex justify-between items-start">
+                                <div className="flex justify-between items-end">
                                     <div className="text">{wave.message}</div>
                                     <div className="flex ml-3 mt-2 opacity-70">
                                         <div data-tip data-for={`time-${index}`}

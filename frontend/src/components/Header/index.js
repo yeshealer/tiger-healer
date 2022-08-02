@@ -12,9 +12,9 @@ const Header = () => {
                     <Icon icon="carbon:home" width="24" height="24" />
                     <p className="font-bold ml-1">Home</p>
                 </div>
-                <div className="flex items-center hover:text-sky-500 ease-in duration-200 cursor-pointer ml-5" onClick={() => navigate('/wave')}>
+                <div className="flex items-center hover:text-sky-500 ease-in duration-200 cursor-pointer ml-5" onClick={() => navigate('/chat')}>
                     <Icon icon="bxs:chat" width="24" height="24" />
-                    <p className="font-bold ml-1">Wave</p>
+                    <p className="font-bold ml-1">Chat</p>
                 </div>
             </div>
             <ConnectButton />

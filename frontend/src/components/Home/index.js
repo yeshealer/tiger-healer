@@ -19,13 +19,13 @@ const Home = () => {
                         duration: 0.5
                     }}
                     className="w-[17rem] h-[17rem] flex relative justify-center items-center bg-slate-500/20 hover:bg-sky-500/30 ease-in duration-200 shadow-xl cursor-pointer mb-2 border-t border-l border-sky-400"
-                    onClick={() => navigate('/wave')}
+                    onClick={() => navigate('/chat')}
                 >
                     <div className="w-[8.5rem] h-[8.5rem] bg-slate-500/20 absolute rounded-lg" />
                     <Player
                         autoplay
                         loop
-                        src="https://assets10.lottiefiles.com/private_files/lf30_ikcobyoq.json"
+                        src="https://assets10.lottiefiles.com/packages/lf20_rcuthdnb.json"
                         className="w-56 h-56 -rotate-45"
                     />
                 </motion.div>

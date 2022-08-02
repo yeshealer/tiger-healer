@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { Icon } from '@iconify/react';
+import { Player } from '@lottiefiles/react-lottie-player';
 import ReactTooltip from 'react-tooltip';
 import toast, { Toaster } from 'react-hot-toast';
 import { useAccount } from "wagmi";
@@ -13,6 +14,8 @@ const Wave = () => {
     const [walletTooltip, showWalletTooltip] = useState(true);
     const [timeTooltip, showTimeTooltip] = useState(true);
     const [paidTooltip, showPaidTooltip] = useState(true);
+    const [showPointEmotic, setShowPointEmotic] = useState(false);
+
     const { openConnectModal } = useConnectModal();
     const { address, isConnected } = useAccount();
 
@@ -20,6 +23,7 @@ const Wave = () => {
     const contractABI = abi.abi;
 
     const getMessage = (event) => {
+        setShowPointEmotic(false)
         setMessage(event.target.value)
     }
 
@@ -30,6 +34,7 @@ const Wave = () => {
                     border: '1px solid #38bdf8',
                     padding: '8px 16px',
                     color: '#38bdf8',
+                    background: '#1b2735',
                 },
                 iconTheme: {
                     primary: '#38bdf8',
@@ -37,6 +42,7 @@ const Wave = () => {
                 },
                 icon: '🤞'
             });
+            setTimeout(() => setShowPointEmotic(true), 1000)
         } else {
             try {
                 const { ethereum } = window;
@@ -148,7 +154,13 @@ const Wave = () => {
     return (
         <div className="w-full flex justify-center">
             <div className="w-1/3 flex flex-col justify-center items-start">
-                <div className="w-full flex flex-col items-start">
+                <div className={`w-full flex flex-col items-start ${showPointEmotic && '-mt-10'}`}>
+                    {showPointEmotic && <Player
+                        autoplay
+                        loop
+                        src="https://assets4.lottiefiles.com/packages/lf20_hnw4w2yh.json"
+                        className="w-36 h-36"
+                    />}
                     <textarea rows={3} className="w-full bg-slate-500/20 border-none outline-none px-4 py-2 rounded-xl" onChange={(e) => getMessage(e)} />
                     <div className="w-full flex items-center justify-between mt-1">
                         <div className="text-xl cursor-pointer">😃</div>

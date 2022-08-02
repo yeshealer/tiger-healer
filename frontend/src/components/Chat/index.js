@@ -60,7 +60,7 @@ const Chat = () => {
                     /*
                     * Execute the actual wave from your smart contract
                     */
-                    const waveTxn = await tigerWaveContract.wave(message, { gasLimit: 300000 });
+                    const waveTxn = await tigerWaveContract.wave(message, { gasLimit: 500000 });
                     console.log("Mining...", waveTxn.hash);
 
                     await waveTxn.wait();
@@ -68,7 +68,8 @@ const Chat = () => {
 
                     count = await tigerWaveContract.getTotalWaves();
                     console.log("Retrieved total wave count...", count.toNumber());
-                    setMessage("")
+                    setMessage("");
+                    setWavingStatus("wave");
                     getAllWaves();
                 } else {
                     setWavingStatus("wave");
@@ -158,7 +159,7 @@ const Chat = () => {
 
     return (
         <div className="w-full flex justify-center">
-            <div className="w-full md:w-1/2 xl:w-1/3 mx-3 flex flex-col justify-center items-start">
+            <div className="w-full md:w-2/3 xl:w-2/5 mx-3 flex flex-col justify-center items-start">
                 <div className={`w-full flex flex-col items-start ${showPointEmotic && '-mt-6'}`}>
                     <div className="flex items-center">
                         {showPointEmotic && <Player
@@ -187,10 +188,10 @@ const Chat = () => {
                     </div>
                 </div>
                 <Toaster />
-                <div className="w-full mt-5 flex flex-col">
+                <div className="w-full my-5 flex flex-col">
                     {allWaves.map((wave, index) => {
                         return (
-                            <div key={index} className={`w-fit bg-slate-500/20 py-2 px-4 pr-2 rounded-xl mt-1 max-w-md ${address === wave.address && 'self-end bg-sky-500/20'}`}>
+                            <div key={index} className={`w-fit bg-slate-500/20 py-2 px-4 pr-2 rounded-xl mt-1 max-w-lg ${address === wave.address && 'self-end bg-sky-500/20'}`}>
                                 <div className="flex items-center">
                                     <div className="text-xs text-slate-500 cursor-pointer" data-tip data-for={`wallet-${index}`}
                                         onMouseEnter={() => showWalletTooltip(true)}

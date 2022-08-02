@@ -8,7 +8,7 @@ import GlobalStyle from './GlobalStyle'
 import Background from './components/Background'
 import Header from './components/Header'
 import Home from './components/Home'
-import Wave from './components/Wave'
+import Chat from './components/Chat'
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
       <Suspense>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/wave" element={<Wave />} />
+          <Route path="/chat" element={<Chat />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

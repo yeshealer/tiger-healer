@@ -11,7 +11,6 @@ import Home from './components/Home'
 import Wave from './components/Wave'
 
 function App() {
-  const tigerWave = "0x00780C8645387f271fcE5A06C1E52606410Fc694"
   return (
     <BrowserRouter>
       <GlobalStyle />

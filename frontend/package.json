@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@headlessui/react": "^1.6.6",
     "@iconify/react": "^3.2.2",
     "@lottiefiles/react-lottie-player": "^3.4.7",
     "@rainbow-me/rainbowkit": "^0.4.5",
@@ -15,6 +16,7 @@
     "node-sass": "^7.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.3.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-tooltip": "^4.2.21",

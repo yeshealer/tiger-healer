@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { Icon } from '@iconify/react';
+import ReactTooltip from 'react-tooltip';
 import { useAccount } from "wagmi";
 import { ethers } from "ethers";
 import abi from "../../utils/TigerWave.json";
@@ -8,8 +9,12 @@ import abi from "../../utils/TigerWave.json";
 const Wave = () => {
     const [allWaves, setAllWaves] = useState([]);
     const [message, setMessage] = useState("");
+    const [walletTooltip, showWalletTooltip] = useState(true);
+    const [timeTooltip, showTimeTooltip] = useState(true);
+    const [paidTooltip, showPaidTooltip] = useState(true);
     const { openConnectModal } = useConnectModal();
     const { address, isConnected } = useAccount();
+
     const contractAddress = "0x1179c470757b9b8Caa16f00fD6f0a6D6e1d918a5";
     const contractABI = abi.abi;
 
@@ -148,12 +153,39 @@ const Wave = () => {
                 <div className="w-full mt-5 flex flex-col">
                     {allWaves.map((wave, index) => {
                         return (
-                            <div key={index} className={address === wave.address ? "w-fit bg-sky-500/20 py-2 px-4 rounded-xl mt-1 self-end" : "w-fit bg-slate-500/20 py-2 px-4 rounded-xl mt-1"}>
-                                <div className="text-sm">Address: {wave.address}</div>
-                                <div className="text-sm">Time: {wave.timestamp.toLocaleString()}</div>
-                                <div className="flex justify-between items-center">
-                                    <div className="text-sm">Message: {wave.message}</div>
-                                    {wave.isPaid && <Icon icon="flat-color-icons:paid" />}
+                            <div key={index} className={address === wave.address ? "w-fit bg-sky-500/20 py-2 px-4 pr-2 rounded-xl mt-1 self-end" : "w-fit bg-slate-500/20 py-2 px-4 pr-2 rounded-xl mt-1"}>
+                                <div className="flex justify-between items-start">
+                                    <div className="text-sm">{wave.message}</div>
+                                    <div className="flex ml-3 mt-2 opacity-70">
+                                        <div data-tip data-for={`wallet-${index}`}
+                                            onMouseEnter={() => showWalletTooltip(true)}
+                                            onMouseLeave={() => {
+                                                showWalletTooltip(false);
+                                                setTimeout(() => showWalletTooltip(true), 50);
+                                            }}
+                                            className="cursor-pointer"
+                                        ><Icon icon="fluent:wallet-credit-card-16-filled" width="14px" height="14px" /></div>
+                                        {walletTooltip && <ReactTooltip id={`wallet-${index}`}>{wave.address}</ReactTooltip>}
+                                        <div data-tip data-for={`time-${index}`}
+                                            onMouseEnter={() => showTimeTooltip(true)}
+                                            onMouseLeave={() => {
+                                                showTimeTooltip(false);
+                                                setTimeout(() => showTimeTooltip(true), 50);
+                                            }}
+                                            className="cursor-pointer"
+                                        ><Icon icon="bx:time-five" className="ml-1" width="14px" height="14px" /></div>
+                                        {timeTooltip && <ReactTooltip id={`time-${index}`}>{wave.timestamp.toLocaleString()}</ReactTooltip>}
+                                        {wave.isPaid && <div
+                                            data-tip data-for={`paid-${index}`}
+                                            onMouseEnter={() => showPaidTooltip(true)}
+                                            onMouseLeave={() => {
+                                                showPaidTooltip(false);
+                                                setTimeout(() => showPaidTooltip(true), 50);
+                                            }}
+                                            className="text-xs ml-1 cursor-pointer"
+                                        >🎉</div>}
+                                        {paidTooltip && <ReactTooltip id={`paid-${index}`}>🎉 Congratulations! You won 0.0001ETH!</ReactTooltip>}
+                                    </div>
                                 </div>
                             </div>
                         )

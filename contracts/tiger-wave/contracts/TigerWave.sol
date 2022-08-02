@@ -9,7 +9,7 @@ contract TigerWave {
 
     uint256 private seed;
 
-    event NewWave(address indexed from, uint256 timestamp, string message);
+    event NewWave(address indexed from, uint256 timestamp, string message, bool isPaid);
 
     struct Wave {
         address waver;
@@ -59,7 +59,7 @@ contract TigerWave {
         }
 
         waves.push(Wave(msg.sender, _message, block.timestamp, isPaid));
-        emit NewWave(msg.sender, block.timestamp, _message);
+        emit NewWave(msg.sender, block.timestamp, _message, isPaid);
     }
 
     function getAllWaves() public view returns (Wave[] memory) {

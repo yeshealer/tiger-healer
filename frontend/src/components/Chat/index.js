@@ -68,7 +68,7 @@ const Chat = () => {
 
                     count = await tigerWaveContract.getTotalWaves();
                     console.log("Retrieved total wave count...", count.toNumber());
-                    setMessage("")
+                    setMessage("");
                     getAllWaves();
                 } else {
                     setWavingStatus("wave");

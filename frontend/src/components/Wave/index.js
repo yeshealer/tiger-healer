@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { Icon } from '@iconify/react';
 import ReactTooltip from 'react-tooltip';
+import toast, { Toaster } from 'react-hot-toast';
 import { useAccount } from "wagmi";
 import { ethers } from "ethers";
 import abi from "../../utils/TigerWave.json";
@@ -23,33 +24,49 @@ const Wave = () => {
     }
 
     const wave = async () => {
-        try {
-            const { ethereum } = window;
+        if (message === '') {
+            toast('Let me know what you think of me!', {
+                style: {
+                    border: '1px solid #38bdf8',
+                    padding: '8px 16px',
+                    color: '#38bdf8',
+                },
+                iconTheme: {
+                    primary: '#38bdf8',
+                    secondary: '#FFFAEE',
+                },
+                icon: '🤞'
+            });
+        } else {
+            try {
+                const { ethereum } = window;
 
-            if (ethereum) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-                const signer = provider.getSigner();
-                const tigerWaveContract = new ethers.Contract(contractAddress, contractABI, signer);
+                if (ethereum) {
+                    const provider = new ethers.providers.Web3Provider(ethereum);
+                    const signer = provider.getSigner();
+                    const tigerWaveContract = new ethers.Contract(contractAddress, contractABI, signer);
 
-                let count = await tigerWaveContract.getTotalWaves();
-                console.log("Retrieved total wave count...", count.toNumber());
+                    let count = await tigerWaveContract.getTotalWaves();
+                    console.log("Retrieved total wave count...", count.toNumber());
 
-                /*
-                * Execute the actual wave from your smart contract
-                */
-                const waveTxn = await tigerWaveContract.wave(message, { gasLimit: 300000 });
-                console.log("Mining...", waveTxn.hash);
+                    /*
+                    * Execute the actual wave from your smart contract
+                    */
+                    const waveTxn = await tigerWaveContract.wave(message, { gasLimit: 300000 });
+                    console.log("Mining...", waveTxn.hash);
 
-                await waveTxn.wait();
-                console.log("Mined -- ", waveTxn.hash);
+                    await waveTxn.wait();
+                    console.log("Mined -- ", waveTxn.hash);
 
-                count = await tigerWaveContract.getTotalWaves();
-                console.log("Retrieved total wave count...", count.toNumber());
-            } else {
-                console.log("Ethereum object doesn't exist!");
+                    count = await tigerWaveContract.getTotalWaves();
+                    console.log("Retrieved total wave count...", count.toNumber());
+                    getAllWaves()
+                } else {
+                    console.log("Ethereum object doesn't exist!");
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
         }
     }
 
@@ -150,6 +167,7 @@ const Wave = () => {
                         </button>}
                     </div>
                 </div>
+                <Toaster />
                 <div className="w-full mt-5 flex flex-col">
                     {allWaves.map((wave, index) => {
                         return (
@@ -184,7 +202,7 @@ const Wave = () => {
                                             }}
                                             className="text-xs ml-1 cursor-pointer"
                                         >🎉</div>}
-                                        {paidTooltip && <ReactTooltip id={`paid-${index}`}>🎉 Congratulations! You won 0.0001ETH!</ReactTooltip>}
+                                        {paidTooltip && <ReactTooltip id={`paid-${index}`}>{address === wave.address ? '🎉 Congratulations! You' : 'This user'} won 0.0001ETH!</ReactTooltip>}
                                     </div>
                                 </div>
                             </div>

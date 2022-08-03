@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { Player } from '@lottiefiles/react-lottie-player'
+import { Player } from '@lottiefiles/react-lottie-player';
+import { Icon } from '@iconify/react';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import ReactTooltip from 'react-tooltip';
 import toast, { Toaster } from 'react-hot-toast';
@@ -175,10 +176,10 @@ const Chat = () => {
                         </div>
                         <textarea rows={3} maxLength={160} className="w-full bg-slate-500/20 border-none outline-none px-4 py-2 rounded-xl" value={message} onChange={(e) => getMessage(e)} />
                     </div>
-                    <div className="w-full flex items-center justify-between mt-1">
-                        <div className="text-lg cursor-pointer">😃</div>
-                        <div className={`${message.length === 160 && 'text-rose-500'}`}>{message.length} / 160</div>
-                    </div>
+                    {/* <div className="w-full flex items-center justify-between mt-1"> */}
+                        {/* <div className="text-lg cursor-pointer"><Icon icon="ic:baseline-insert-emoticon" width={20} height={20} /></div> */}
+                        <div className={`self-end ${message.length === 160 && 'text-rose-500'}`}>{message.length} / 160</div>
+                    {/* </div> */}
                     {isConnected ? <button className="relative px-5 py-1 font-medium text-white group self-end" onClick={() => wave()}>
                         <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-sky-500 group-hover:bg-sky-700 group-hover:skew-x-12"></span>
                         <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform skew-x-12 bg-sky-700 group-hover:bg-sky-500 group-hover:-skew-x-12"></span>

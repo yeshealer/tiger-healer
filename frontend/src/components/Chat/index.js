@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { Icon } from '@iconify/react';
-import { Player } from '@lottiefiles/react-lottie-player';
+import { Player } from '@lottiefiles/react-lottie-player'
+import { Scrollbars } from 'react-custom-scrollbars-2';
 import ReactTooltip from 'react-tooltip';
 import toast, { Toaster } from 'react-hot-toast';
 import { useAccount } from "wagmi";
@@ -60,7 +60,7 @@ const Chat = () => {
                     /*
                     * Execute the actual wave from your smart contract
                     */
-                    const waveTxn = await tigerWaveContract.wave(message, { gasLimit: 500000 });
+                    const waveTxn = await tigerWaveContract.wave(message, { gasLimit: 300000 });
                     console.log("Mining...", waveTxn.hash);
 
                     await waveTxn.wait();
@@ -157,78 +157,86 @@ const Chat = () => {
         })();
     })
 
+    const chatBox = document.getElementById("chat-box")?.children[0]?.children[0]
+    chatBox?.classList.add("flex", "flex-col", "!relative", "md:!absolute")
+
     return (
         <div className="w-full flex justify-center">
             <div className="w-full md:w-2/3 xl:w-2/5 mx-3 flex flex-col justify-center items-start">
-                <div className={`w-full flex flex-col items-start ${showPointEmotic && '-mt-6'}`}>
-                    <div className="flex items-center">
-                        {showPointEmotic && <Player
-                            autoplay
-                            loop
-                            src="https://assets4.lottiefiles.com/packages/lf20_hnw4w2yh.json"
-                            className="w-36 h-36"
-                        />}
+                <div className={`w-full flex flex-col items-start ${showPointEmotic && '-mt-2'}`}>
+                    <div className="w-full flex">
+                        <div className="flex items-center">
+                            {showPointEmotic && <Player
+                                autoplay
+                                loop
+                                src="https://assets9.lottiefiles.com/private_files/lf30_lo8abkil.json"
+                                className="w-24 h-24"
+                            />}
+                        </div>
+                        <textarea rows={3} maxLength={160} className="w-full bg-slate-500/20 border-none outline-none px-4 py-2 rounded-xl" value={message} onChange={(e) => getMessage(e)} />
                     </div>
-                    <textarea rows={3} className="w-full bg-slate-500/20 border-none outline-none px-4 py-2 rounded-xl" value={message} onChange={(e) => getMessage(e)} />
                     <div className="w-full flex items-center justify-between mt-1">
-                        <div className="text-xl cursor-pointer">😃</div>
-                        {isConnected ? <button className="relative px-5 py-1 font-medium text-white group" onClick={() => wave()}>
-                            <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-sky-500 group-hover:bg-sky-700 group-hover:skew-x-12"></span>
-                            <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform skew-x-12 bg-sky-700 group-hover:bg-sky-500 group-hover:-skew-x-12"></span>
-                            <span className="absolute bottom-0 left-0 hidden w-10 h-20 transition-all duration-100 ease-out transform -translate-x-8 translate-y-10 bg-sky-600 -rotate-12"></span>
-                            <span className="absolute bottom-0 right-0 hidden w-10 h-20 transition-all duration-100 ease-out transform translate-x-10 translate-y-8 bg-sky-400 -rotate-12"></span>
-                            <span className="relative">{wavingStatus === 'waving' ? 'Sending...' : 'Send'}</span>
-                        </button> : openConnectModal && <button className="relative px-5 py-1 font-medium text-white group" onClick={openConnectModal}>
-                            <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-sky-500 group-hover:bg-sky-700 group-hover:skew-x-12"></span>
-                            <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform skew-x-12 bg-sky-700 group-hover:bg-sky-500 group-hover:-skew-x-12"></span>
-                            <span className="absolute bottom-0 left-0 hidden w-10 h-20 transition-all duration-100 ease-out transform -translate-x-8 translate-y-10 bg-sky-600 -rotate-12"></span>
-                            <span className="absolute bottom-0 right-0 hidden w-10 h-20 transition-all duration-100 ease-out transform translate-x-10 translate-y-8 bg-sky-400 -rotate-12"></span>
-                            <span className="relative">Connect</span>
-                        </button>}
+                        <div className="text-lg cursor-pointer">😃</div>
+                        <div className={`${message.length === 160 && 'text-rose-500'}`}>{message.length} / 160</div>
                     </div>
+                    {isConnected ? <button className="relative px-5 py-1 font-medium text-white group self-end" onClick={() => wave()}>
+                        <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-sky-500 group-hover:bg-sky-700 group-hover:skew-x-12"></span>
+                        <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform skew-x-12 bg-sky-700 group-hover:bg-sky-500 group-hover:-skew-x-12"></span>
+                        <span className="absolute bottom-0 left-0 hidden w-10 h-20 transition-all duration-100 ease-out transform -translate-x-8 translate-y-10 bg-sky-600 -rotate-12"></span>
+                        <span className="absolute bottom-0 right-0 hidden w-10 h-20 transition-all duration-100 ease-out transform translate-x-10 translate-y-8 bg-sky-400 -rotate-12"></span>
+                        <span className="relative">{wavingStatus === 'waving' ? 'Sending...' : 'Send'}</span>
+                    </button> : openConnectModal && <button className="relative px-5 py-1 font-medium text-white group self-end" onClick={openConnectModal}>
+                        <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-sky-500 group-hover:bg-sky-700 group-hover:skew-x-12"></span>
+                        <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform skew-x-12 bg-sky-700 group-hover:bg-sky-500 group-hover:-skew-x-12"></span>
+                        <span className="absolute bottom-0 left-0 hidden w-10 h-20 transition-all duration-100 ease-out transform -translate-x-8 translate-y-10 bg-sky-600 -rotate-12"></span>
+                        <span className="absolute bottom-0 right-0 hidden w-10 h-20 transition-all duration-100 ease-out transform translate-x-10 translate-y-8 bg-sky-400 -rotate-12"></span>
+                        <span className="relative">Connect</span>
+                    </button>}
                 </div>
                 <Toaster />
-                <div className="w-full my-5 flex flex-col">
-                    {allWaves.map((wave, index) => {
-                        return (
-                            <div key={index} className={`w-fit bg-slate-500/20 py-2 px-4 pr-2 rounded-xl mt-1 max-w-lg ${address === wave.address && 'self-end bg-sky-500/20'}`}>
-                                <div className="flex items-center">
-                                    <div className="text-xs text-slate-500 cursor-pointer" data-tip data-for={`wallet-${index}`}
-                                        onMouseEnter={() => showWalletTooltip(true)}
-                                        onMouseLeave={() => {
-                                            showWalletTooltip(false);
-                                            setTimeout(() => showWalletTooltip(true), 50);
-                                        }}
-                                    >{wave.address.slice(0, 10)}...</div>
-                                    {wave.isPaid && <div
-                                        data-tip data-for={`paid-${index}`}
-                                        onMouseEnter={() => showPaidTooltip(true)}
-                                        onMouseLeave={() => {
-                                            showPaidTooltip(false);
-                                            setTimeout(() => showPaidTooltip(true), 50);
-                                        }}
-                                        className="text-xs ml-1 cursor-pointer"
-                                    >🎉</div>}
-                                    {paidTooltip && <ReactTooltip id={`paid-${index}`}>{address === wave.address ? '🎉 Congratulations! You' : 'This user'} won 0.0001ETH by writing this msg!</ReactTooltip>}
-                                </div>
-                                {walletTooltip && <ReactTooltip id={`wallet-${index}`}>{wave.address}</ReactTooltip>}
-                                <div className="flex justify-between items-end">
-                                    <div className="text">{wave.message}</div>
-                                    <div className="flex ml-3 mt-2 opacity-70">
-                                        <div data-tip data-for={`time-${index}`}
-                                            onMouseEnter={() => showTimeTooltip(true)}
+                <div id="chat-box" className="w-full h-full md:h-[calc(100vh-260px)] overflow-auto my-5 md:mt-5 md:mb-0 flex flex-col rounded-xl">
+                    <Scrollbars autoHide>
+                        {allWaves.map((wave, index) => {
+                            return (
+                                <div key={index} className={`w-fit bg-slate-500/20 py-2 px-4 pr-2 rounded-xl mt-1 max-w-lg ${address === wave.address && 'self-end bg-sky-500/20'}`}>
+                                    <div className="flex items-center">
+                                        <div className="text-xs text-slate-500 cursor-pointer" data-tip data-for={`wallet-${index}`}
+                                            onMouseEnter={() => showWalletTooltip(true)}
                                             onMouseLeave={() => {
-                                                showTimeTooltip(false);
-                                                setTimeout(() => showTimeTooltip(true), 50);
+                                                showWalletTooltip(false);
+                                                setTimeout(() => showWalletTooltip(true), 50);
                                             }}
-                                            className="cursor-pointer text-xs text-slate-500"
-                                        >{wave.timestamp.getHours()}:{wave.timestamp.getMinutes()}</div>
-                                        {timeTooltip && <ReactTooltip id={`time-${index}`}>{wave.timestamp.toLocaleString()}</ReactTooltip>}
+                                        >{wave.address.slice(0, 10)}...</div>
+                                        {wave.isPaid && <div
+                                            data-tip data-for={`paid-${index}`}
+                                            onMouseEnter={() => showPaidTooltip(true)}
+                                            onMouseLeave={() => {
+                                                showPaidTooltip(false);
+                                                setTimeout(() => showPaidTooltip(true), 50);
+                                            }}
+                                            className="text-xs ml-1 cursor-pointer"
+                                        >🎉</div>}
+                                        {paidTooltip && <ReactTooltip id={`paid-${index}`}>{address === wave.address ? '🎉 Congratulations! You' : 'This user'} won 0.0001ETH by writing this msg!</ReactTooltip>}
+                                    </div>
+                                    {walletTooltip && <ReactTooltip id={`wallet-${index}`}>{wave.address}</ReactTooltip>}
+                                    <div className="flex justify-between items-end">
+                                        <div className="text">{wave.message}</div>
+                                        <div className="flex ml-3 mt-2 opacity-70">
+                                            <div data-tip data-for={`time-${index}`}
+                                                onMouseEnter={() => showTimeTooltip(true)}
+                                                onMouseLeave={() => {
+                                                    showTimeTooltip(false);
+                                                    setTimeout(() => showTimeTooltip(true), 50);
+                                                }}
+                                                className="cursor-pointer text-xs text-slate-500"
+                                            >{wave.timestamp.getHours()}:{wave.timestamp.getMinutes()}</div>
+                                            {timeTooltip && <ReactTooltip id={`time-${index}`}>{wave.timestamp.toLocaleString()}</ReactTooltip>}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        )
-                    })}
+                            )
+                        })}
+                    </Scrollbars>
                 </div>
             </div>
         </div>

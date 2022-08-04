@@ -16,12 +16,12 @@ const Chat = () => {
     const [timeTooltip, showTimeTooltip] = useState(true);
     const [paidTooltip, showPaidTooltip] = useState(true);
     const [showPointEmotic, setShowPointEmotic] = useState(false);
-    const [wavingStatus, setWavingStatus] = useState("wave")
+    const [wavingStatus, setWavingStatus] = useState("wave");
 
     const { openConnectModal } = useConnectModal();
     const { address, isConnected } = useAccount();
 
-    const contractAddress = "0x1179c470757b9b8Caa16f00fD6f0a6D6e1d918a5";
+    const contractAddress = "0xCA949F451Dcd082928d1828bCc437c2825Fe9530";
     const contractABI = abi.abi;
 
     const getMessage = (event) => {
@@ -158,6 +158,16 @@ const Chat = () => {
         })();
     })
 
+    const isValidUrl = (urlString) => {
+        var urlPattern = new RegExp('^(https?:\\/\\/)?' + // validate protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // validate domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))' + // validate OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // validate port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?' + // validate query string
+            '(\\#[-a-z\\d_]*)?$', 'i'); // validate fragment locator
+        return !!urlPattern.test(urlString);
+    }
+
     const chatBox = document.getElementById("chat-box")?.children[0]?.children[0]
     chatBox?.classList.add("flex", "flex-col", "!relative", "md:!absolute")
 
@@ -177,8 +187,8 @@ const Chat = () => {
                         <textarea rows={3} maxLength={160} className="w-full bg-slate-500/20 border-none outline-none px-4 py-2 rounded-xl" value={message} onChange={(e) => getMessage(e)} />
                     </div>
                     {/* <div className="w-full flex items-center justify-between mt-1"> */}
-                        {/* <div className="text-lg cursor-pointer"><Icon icon="ic:baseline-insert-emoticon" width={20} height={20} /></div> */}
-                        <div className={`self-end ${message.length === 160 && 'text-rose-500'}`}>{message.length} / 160</div>
+                    {/* <div className="text-lg cursor-pointer"><Icon icon="ic:baseline-insert-emoticon" width={20} height={20} /></div> */}
+                    <div className={`self-end ${message.length === 160 && 'text-rose-500'}`}>{message.length} / 160</div>
                     {/* </div> */}
                     {isConnected ? <button className="relative px-5 py-1 font-medium text-white group self-end" onClick={() => wave()}>
                         <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-sky-500 group-hover:bg-sky-700 group-hover:skew-x-12"></span>
@@ -221,7 +231,7 @@ const Chat = () => {
                                     </div>
                                     {walletTooltip && <ReactTooltip id={`wallet-${index}`}>{wave.address}</ReactTooltip>}
                                     <div className="flex justify-between items-end">
-                                        <div className="text">{wave.message}</div>
+                                        {/* {wave.message.indexOf("http://") === 0 || wave.message.indexOf("https://") === 0 ? <a href={wave.message} target="blank" className="text-sm">{wave.message}</a> : <div className="text-sm">{wave.message}</div>} */}
                                         <div className="flex ml-3 mt-2 opacity-70">
                                             <div data-tip data-for={`time-${index}`}
                                                 onMouseEnter={() => showTimeTooltip(true)}

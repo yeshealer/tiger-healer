@@ -85,7 +85,9 @@ const Chat = () => {
           getAllWaves()
           setStartTime(Date.now() + 180000)
           setIsStartCountDown(true)
-          setTimeout(() => setIsStartCountDown(false), 180000)
+          setTimeout(() => {
+            setIsStartCountDown(false)
+          }, 180000)
         } else {
           setWavingStatus('wave')
           console.log("Ethereum object doesn't exist!")

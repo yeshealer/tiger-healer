@@ -6,7 +6,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 const Home = () => {
     const navigate = useNavigate();
     return (
-        <div className="w-fit flex justify-center m-auto my-36 rotate-45">
+        <div className="w-fit flex justify-center m-auto mt-36 rotate-45">
             <div className="mr-2">
                 <motion.div
                     whileHover={{

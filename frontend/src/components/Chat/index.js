@@ -159,13 +159,35 @@ const Chat = () => {
     })
 
     const isValidUrl = (urlString) => {
-        var urlPattern = new RegExp('^(https?:\\/\\/)?' + // validate protocol
-            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // validate domain name
-            '((\\d{1,3}\\.){3}\\d{1,3}))' + // validate OR ip (v4) address
-            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // validate port and path
-            '(\\?[;&a-z\\d%_.~+=-]*)?' + // validate query string
-            '(\\#[-a-z\\d_]*)?$', 'i'); // validate fragment locator
+        const urlPattern = new RegExp("([a-zA-Z0-9]+://)?([a-zA-Z0-9_]+:[a-zA-Z0-9_]+@)?([a-zA-Z0-9.-]+\\.[A-Za-z]{2,4})(:[0-9]+)?(/.*)?");
         return !!urlPattern.test(urlString);
+    }
+
+    const getURL = (urlString) => {
+        const matches = urlString.match(/\bhttps?:\/\/\S+/gi);
+        return matches
+    }
+
+    const stringContainURL = (msg) => {
+        const URLs = getURL(msg);
+        console.log(msg)
+        const firstLetter = msg.slice(0, msg.indexOf(URLs[0]))
+        const lastLetter = msg.slice(msg.indexOf(URLs[URLs.length - 1]) + URLs[URLs.length - 1].length, (msg.length))
+        return (
+            <div className="text-sm">
+                {firstLetter}
+                {firstLetter.length > 0 && <br />}
+                {URLs.map((url, index) => {
+                    return (
+                        <>
+                            <a href={url}>{url}</a>
+                            {index <= URLs.length && <div>{msg.slice(msg.indexOf(url) + url.length, msg.indexOf(URLs[index + 1]))}</div>}
+                        </>
+                    )
+                })}
+                {lastLetter}
+            </div>
+        )
     }
 
     const chatBox = document.getElementById("chat-box")?.children[0]?.children[0]
@@ -231,7 +253,7 @@ const Chat = () => {
                                     </div>
                                     {walletTooltip && <ReactTooltip id={`wallet-${index}`}>{wave.address}</ReactTooltip>}
                                     <div className="flex justify-between items-end">
-                                        {/* {wave.message.indexOf("http://") === 0 || wave.message.indexOf("https://") === 0 ? <a href={wave.message} target="blank" className="text-sm">{wave.message}</a> : <div className="text-sm">{wave.message}</div>} */}
+                                        {isValidUrl(wave.message) ? stringContainURL(wave.message) : <div className="text-sm">{wave.message}</div>}
                                         <div className="flex ml-3 mt-2 opacity-70">
                                             <div data-tip data-for={`time-${index}`}
                                                 onMouseEnter={() => showTimeTooltip(true)}

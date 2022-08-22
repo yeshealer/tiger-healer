@@ -11,6 +11,8 @@
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
+    "install-tw": "cd contracts/tiger-wave && yarn",
+    "install-fe": "cd frontend && yarn",
     "start": "cd frontend && yarn start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

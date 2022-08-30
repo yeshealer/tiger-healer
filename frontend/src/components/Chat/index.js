@@ -26,7 +26,7 @@ const Chat = () => {
   const { openConnectModal } = useConnectModal()
   const { address, isConnected } = useAccount()
 
-  const contractAddress = '0xCA949F451Dcd082928d1828bCc437c2825Fe9530'
+  const contractAddress = '0x3c0480dF1Cb849A0Ff552489f33A726Cf9Ba633D'
   const contractABI = abi.abi
 
   const getMessage = (event) => {
@@ -218,7 +218,7 @@ const Chat = () => {
                 href={url}
                 target="_blank"
                 rel="noreferrer"
-                className="text-gray-400"
+                className="text-gray-400 transition-all hover:text-gray-200 hover:underline"
               >
                 {url}
               </a>

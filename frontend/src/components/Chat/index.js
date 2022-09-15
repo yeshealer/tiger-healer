@@ -183,7 +183,7 @@ const Chat = () => {
   }, [contractABI])
 
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       await getAllWaves()
     })()
   })
@@ -260,9 +260,8 @@ const Chat = () => {
     <div className="w-full flex justify-center">
       <div className="w-full md:w-2/3 xl:w-2/5 mx-3 flex flex-col justify-center items-start">
         <div
-          className={`w-full flex flex-col items-start ${
-            showPointEmotic && '-mt-2'
-          }`}
+          className={`w-full flex flex-col items-start ${showPointEmotic && '-mt-2'
+            }`}
         >
           <div className="w-full flex">
             <div className="flex items-center">
@@ -345,9 +344,8 @@ const Chat = () => {
               return (
                 <div
                   key={index}
-                  className={`w-fit bg-slate-500/20 py-2 px-4 pr-2 rounded-xl mt-1 max-w-lg ${
-                    address === wave.address && 'self-end bg-sky-500/20'
-                  }`}
+                  className={`w-fit bg-slate-500/20 py-2 px-4 pr-2 rounded-xl mt-1 max-w-lg ${address === wave.address && 'self-end bg-sky-500/20'
+                    }`}
                 >
                   <div className="flex items-center">
                     <div
